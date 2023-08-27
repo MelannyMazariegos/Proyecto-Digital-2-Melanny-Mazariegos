@@ -7,6 +7,9 @@
 #define verde 22
 #define botemp 19
 #define sensortemp 35
+#define pinservo 32
+const int freqPWM = 5000;
+const int resolucion = 8;
 //Pines para los displays
 #define A 27
 #define B 14
