@@ -131,7 +131,7 @@ void desplegarValor(uint8_t valor){
 }
 // Funcion para deplegar punto decimal
 void desplegarPunto(boolean punto){
-    if(punto){
+    if(punto == 1){
         digitalWrite(pindP, HIGH);
     }else{
         digitalWrite(pindP, LOW);
