@@ -45,9 +45,6 @@ bool buttonState1 = HIGH;
 int ADCraw = 0;
 //Constantes para la temperatura
 float temperatura = 0.0;
-int decenas =0;
-int unidades=0;
-int decimal=0;
 //Funcion para convertir el analogico a digital
 uint32_t readADC_Cal(int ADC_RAW){
   esp_adc_cal_characteristics_t adc_chars;
@@ -96,44 +93,35 @@ void loop() {
         Serial.print("Temperatura: ");   
         Serial.print(temperatura);
         Serial.println(",");
-        //Dividir la temperatura en decenas, unidades y decimales
-        int temp = temperatura*100;
-        Serial.print("Decenas: ");   
-        Serial.print(decenas);
-        Serial.println(",");
-        Serial.print("Unidades: ");   
-        Serial.print(unidades);
-        Serial.println(",");
-        Serial.print("Decimales: ");   
-        Serial.print(decimal);
-        Serial.println(",");
-        decenas = (temp/1000);
-        temp = temp - (decenas*1000);
-        unidades = (temp/100);
-        temp = temp - (unidades*100);
-        decimal = (temp/10); 
-        //Mostrar la temperatura en displays
-        digitalWrite(display1, HIGH);
-        digitalWrite(display2, LOW);
-        digitalWrite(display3, LOW);
-        desplegarValor(8);
-        desplegarPunto(1);
-        delay(5);
-//        digitalWrite(display1, LOW);
-  //      digitalWrite(display2, HIGH);
-    //    digitalWrite(display3, LOW);
-      //  desplegarValor(7);
-        //desplegarPunto(0);
-      //  delay(5);
-//        digitalWrite(display1, LOW);
-  //      digitalWrite(display2, LOW);
-    //    digitalWrite(display3, HIGH);
-      //  desplegarValor(3);
-        //desplegarPunto(1);
-        //delay(5);
       }
     }
   }
+  //Dividir la temperatura en decenas, unidades y decimales
+  int temp = temperatura*100;
+  int decenas = (temp/1000);
+  temp = temp - (decenas*1000);
+  int unidades = (temp/100);
+  temp = temp - (unidades*100);
+  int decimal = (temp/10); 
+  //Mostrar la temperatura en displays
+  digitalWrite(display1, HIGH);
+  digitalWrite(display2, LOW);
+  digitalWrite(display3, LOW);
+  desplegarValor(decenas);
+  desplegarPunto(1);
+  delay(5);
+  digitalWrite(display1, LOW);
+  digitalWrite(display2, HIGH);
+  digitalWrite(display3, LOW);
+  desplegarValor(unidades);
+  desplegarPunto(0);
+  delay(5);
+  digitalWrite(display1, LOW);
+  digitalWrite(display2, LOW);
+  digitalWrite(display3, HIGH);
+  desplegarValor(decimal);
+  desplegarPunto(1);
+  delay(5);
   //Encender los leds de acuerdo a la temperatura
   if (temperatura < 37.0){
     digitalWrite(rojo, LOW);
