@@ -43,9 +43,8 @@ bool lastButtonState1 = HIGH;
 bool buttonState1 = HIGH;
 //Constante para el ADC
 int ADCraw = 0;
-//Constante para la temperatura
+//Constantes para la temperatura
 float temperatura = 0.0;
-int temp = 0;
 int decenas =0;
 int unidades=0;
 int decimal=0;
@@ -98,7 +97,7 @@ void loop() {
         Serial.print(temperatura);
         Serial.println(",");
         //Dividir la temperatura en decenas, unidades y decimales
-        temp = temperatura*10;
+        int temp = temperatura*100;
         Serial.print("Decenas: ");   
         Serial.print(decenas);
         Serial.println(",");
@@ -108,29 +107,30 @@ void loop() {
         Serial.print("Decimales: ");   
         Serial.print(decimal);
         Serial.println(",");
-        decenas = temp/100;
-        temp = temp-(decenas*10);
-        unidades = temp/10;
-        decimal = temp-(unidades*10);
+        decenas = (temp/1000);
+        temp = temp - (decenas*1000);
+        unidades = (temp/100);
+        temp = temp - (unidades*100);
+        decimal = (temp/10); 
         //Mostrar la temperatura en displays
         digitalWrite(display1, HIGH);
         digitalWrite(display2, LOW);
         digitalWrite(display3, LOW);
-        desplegarValor(0);
-        desplegarPunto(0);
-        delay(5);
-        digitalWrite(display1, LOW);
-        digitalWrite(display2, HIGH);
-        digitalWrite(display3, LOW);
-        desplegarValor(1);
+        desplegarValor(8);
         desplegarPunto(1);
         delay(5);
-        digitalWrite(display1, LOW);
-        digitalWrite(display2, LOW);
-        digitalWrite(display3, HIGH);
-        desplegarValor(2);
-        desplegarPunto(0);
-        delay(5);
+//        digitalWrite(display1, LOW);
+  //      digitalWrite(display2, HIGH);
+    //    digitalWrite(display3, LOW);
+      //  desplegarValor(7);
+        //desplegarPunto(0);
+      //  delay(5);
+//        digitalWrite(display1, LOW);
+  //      digitalWrite(display2, LOW);
+    //    digitalWrite(display3, HIGH);
+      //  desplegarValor(3);
+        //desplegarPunto(1);
+        //delay(5);
       }
     }
   }

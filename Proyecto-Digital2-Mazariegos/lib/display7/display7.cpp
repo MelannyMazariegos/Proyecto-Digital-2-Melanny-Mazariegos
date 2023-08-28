@@ -22,108 +22,108 @@ void configurar(uint8_t pA, uint8_t pB, uint8_t pC, uint8_t pD, uint8_t pE, uint
     pinMode(pinG, OUTPUT);
     pinMode(pindP, OUTPUT);
     //Configuracion para apagar
-    digitalWrite(pinA, LOW);
-    digitalWrite(pinB, LOW);
-    digitalWrite(pinC, LOW);
-    digitalWrite(pinD, LOW);
-    digitalWrite(pinE, LOW);
-    digitalWrite(pinF, LOW);
-    digitalWrite(pinG, LOW);
-    digitalWrite(pindP, LOW);
+    digitalWrite(pinA, HIGH);
+    digitalWrite(pinB, HIGH);
+    digitalWrite(pinC, HIGH);
+    digitalWrite(pinD, HIGH);
+    digitalWrite(pinE, HIGH);
+    digitalWrite(pinF, HIGH);
+    digitalWrite(pinG, HIGH);
+    digitalWrite(pindP, HIGH);
 }
 //Funcion para desplegar valor
 void desplegarValor(uint8_t valor){
     switch (valor)
     {
     case 0:
+        digitalWrite(pinA, LOW);
+        digitalWrite(pinB, LOW);
+        digitalWrite(pinC, LOW);
+        digitalWrite(pinD, LOW);
+        digitalWrite(pinE, LOW);
+        digitalWrite(pinF, LOW);
+        digitalWrite(pinG, HIGH);
+        break;
+    case 1:
         digitalWrite(pinA, HIGH);
-        digitalWrite(pinB, HIGH);
-        digitalWrite(pinC, HIGH);
+        digitalWrite(pinB, LOW);
+        digitalWrite(pinC, LOW);
         digitalWrite(pinD, HIGH);
+        digitalWrite(pinE, HIGH);
+        digitalWrite(pinF, HIGH);
+        digitalWrite(pinG, HIGH);
+        break;
+    case 2:
+        digitalWrite(pinA, LOW);
+        digitalWrite(pinB, LOW);
+        digitalWrite(pinC, HIGH);
+        digitalWrite(pinD, LOW);
+        digitalWrite(pinE, LOW);
+        digitalWrite(pinF, HIGH);
+        digitalWrite(pinG, LOW);
+        break;
+    case 3:
+        digitalWrite(pinA, LOW);
+        digitalWrite(pinB, LOW);
+        digitalWrite(pinC, LOW);
+        digitalWrite(pinD, LOW);
         digitalWrite(pinE, HIGH);
         digitalWrite(pinF, HIGH);
         digitalWrite(pinG, LOW);
         break;
-    case 1:
-        digitalWrite(pinA, LOW);
-        digitalWrite(pinB, HIGH);
-        digitalWrite(pinC, HIGH);
-        digitalWrite(pinD, LOW);
-        digitalWrite(pinE, LOW);
-        digitalWrite(pinF, LOW);
-        digitalWrite(pinG, LOW);
-        break;
-    case 2:
+    case 4:
         digitalWrite(pinA, HIGH);
-        digitalWrite(pinB, HIGH);
+        digitalWrite(pinB, LOW);
         digitalWrite(pinC, LOW);
         digitalWrite(pinD, HIGH);
         digitalWrite(pinE, HIGH);
         digitalWrite(pinF, LOW);
-        digitalWrite(pinG, HIGH);
-        break;
-    case 3:
-        digitalWrite(pinA, HIGH);
-        digitalWrite(pinB, HIGH);
-        digitalWrite(pinC, HIGH);
-        digitalWrite(pinD, HIGH);
-        digitalWrite(pinE, LOW);
-        digitalWrite(pinF, LOW);
-        digitalWrite(pinG, HIGH);
-        break;
-    case 4:
-        digitalWrite(pinA, LOW);
-        digitalWrite(pinB, HIGH);
-        digitalWrite(pinC, HIGH);
-        digitalWrite(pinD, LOW);
-        digitalWrite(pinE, LOW);
-        digitalWrite(pinF, HIGH);
-        digitalWrite(pinG, HIGH);
+        digitalWrite(pinG, LOW);
         break;
     case 5:
-        digitalWrite(pinA, HIGH);
-        digitalWrite(pinB, LOW);
-        digitalWrite(pinC, HIGH);
-        digitalWrite(pinD, HIGH);
-        digitalWrite(pinE, LOW);
-        digitalWrite(pinF, HIGH);
-        digitalWrite(pinG, HIGH);
+        digitalWrite(pinA, LOW);
+        digitalWrite(pinB, HIGH);
+        digitalWrite(pinC, LOW);
+        digitalWrite(pinD, LOW);
+        digitalWrite(pinE, HIGH);
+        digitalWrite(pinF, LOW);
+        digitalWrite(pinG, LOW);
         break;
     case 6:
-        digitalWrite(pinA, HIGH);
-        digitalWrite(pinB, LOW);
-        digitalWrite(pinC, HIGH);
-        digitalWrite(pinD, HIGH);
-        digitalWrite(pinE, HIGH);
-        digitalWrite(pinF, HIGH);
-        digitalWrite(pinG, HIGH);
-        break;
-    case 7:
-        digitalWrite(pinA, HIGH);
+        digitalWrite(pinA, LOW);
         digitalWrite(pinB, HIGH);
-        digitalWrite(pinC, HIGH);
+        digitalWrite(pinC, LOW);
         digitalWrite(pinD, LOW);
         digitalWrite(pinE, LOW);
         digitalWrite(pinF, LOW);
         digitalWrite(pinG, LOW);
         break;
-    case 8:
-        digitalWrite(pinA, HIGH);
-        digitalWrite(pinB, HIGH);
-        digitalWrite(pinC, HIGH);
+    case 7:
+        digitalWrite(pinA, LOW);
+        digitalWrite(pinB, LOW);
+        digitalWrite(pinC, LOW);
         digitalWrite(pinD, HIGH);
         digitalWrite(pinE, HIGH);
         digitalWrite(pinF, HIGH);
         digitalWrite(pinG, HIGH);
         break;
-    case 9:
-        digitalWrite(pinA, HIGH);
-        digitalWrite(pinB, HIGH);
-        digitalWrite(pinC, HIGH);
-        digitalWrite(pinD, HIGH);
+    case 8:
+        digitalWrite(pinA, LOW);
+        digitalWrite(pinB, LOW);
+        digitalWrite(pinC, LOW);
+        digitalWrite(pinD, LOW);
         digitalWrite(pinE, LOW);
-        digitalWrite(pinF, HIGH);
-        digitalWrite(pinG, HIGH);
+        digitalWrite(pinF, LOW);
+        digitalWrite(pinG, LOW);
+        break;
+    case 9:
+        digitalWrite(pinA, LOW);
+        digitalWrite(pinB, LOW);
+        digitalWrite(pinC, LOW);
+        digitalWrite(pinD, LOW);
+        digitalWrite(pinE, HIGH);
+        digitalWrite(pinF, LOW);
+        digitalWrite(pinG, LOW);
         break;
     default:
         break;
@@ -131,9 +131,9 @@ void desplegarValor(uint8_t valor){
 }
 // Funcion para deplegar punto decimal
 void desplegarPunto(boolean punto){
-    if(punto == 1){
-        digitalWrite(pindP, HIGH);
-    }else{
+    if(punto == 0){
         digitalWrite(pindP, LOW);
+    }else{
+        digitalWrite(pindP, HIGH);
     }
 }
