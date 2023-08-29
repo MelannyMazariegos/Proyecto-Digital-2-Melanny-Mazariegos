@@ -7,10 +7,10 @@
 //Librerias
 //***************************************
 #include <Arduino.h>
-//Libreria para configurar los displays
-#include "display7.h"
+#include "display7.h" //Libreria para configurar los displays
 #include <driver/ledc.h>
 #include <esp_adc_cal.h>
+#include "config.h"
 //************************************
 //Definicion de etiquetas
 //************************************
@@ -46,6 +46,8 @@ int ADCraw = 0;
 //Constantes para la temperatura
 float temperatura = 0.0;
 //Funcion para convertir el analogico a digital
+// set up the 'counter' feed
+AdafruitIO_Feed *tempCanal = io.feed("Proyecto-sensor de temperatura");
 uint32_t readADC_Cal(int ADC_RAW){
   esp_adc_cal_characteristics_t adc_chars;
   esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
@@ -74,6 +76,20 @@ void setup() {
   ledcAttachPin(pinservo, 0);
   ledcWrite(0, 0);
   Serial.begin(115200);
+   // wait for serial monitor to open
+  Serial.print("Connecting to Adafruit IO");
+  // connect to io.adafruit.com
+  io.connect();
+  
+  // wait for a connection
+  while(io.status() < AIO_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+  }
+  // we are connected
+  Serial.println();
+  Serial.println(io.statusText());
+
 }
 //*********************************
 //Loop principal
@@ -93,6 +109,14 @@ void loop() {
         Serial.print("Temperatura: ");   
         Serial.print(temperatura);
         Serial.println(",");
+        io.run();
+
+          // save count to the 'counter' feed on Adafruit IO
+        Serial.print("sending -> ");
+        Serial.println(temperatura);
+        tempCanal ->save(temperatura);
+
+        delay(3000);
       }
     }
   }
