@@ -36,20 +36,20 @@
 //********************************
 //Variables globales
 //********************************
-//Constantes para el debounce
+//Variables para el debounce
 const int debounceDelay = 50;
 unsigned long lastDebounceTime1 = 0;
 bool lastButtonState1 = HIGH;
 bool buttonState1 = HIGH;
-//Constante para el ADC
+//Variable para el ADC
 int ADCraw = 0;
-//Constantes para la temperatura
+//Variables para la temperatura
 float temperatura = 0.0;
 int angulo;
-//Funcion para convertir el analogico a digital
-// set up the 'counter' feed
+
 AdafruitIO_Feed *tempCanal = io.feed("Proyecto-sensor de temperatura");
 AdafruitIO_Feed *relojCanal = io.feed("reloj temperatura");
+//Funcion para convertir el analogico a digital
 uint32_t readADC_Cal(int ADC_RAW){
   esp_adc_cal_characteristics_t adc_chars;
   esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
@@ -97,6 +97,7 @@ void setup() {
 //Loop principal
 //*********************************
 void loop() {
+  //Movimiento del servo dependiendo de la temperatura
   if (10.0 <= temperatura && temperatura <23.0){
     ledcWrite(0, 10);
     angulo = 10;
@@ -133,13 +134,15 @@ void loop() {
         Serial.print("Temperatura: ");   
         Serial.print(temperatura);
         Serial.println(",");
+        //Corre Adafruit.io
         io.run();
 
-          // save count to the 'counter' feed on Adafruit IO
+        //Se manda la temperatura al feed
         Serial.print("sending -> ");
         Serial.println(temperatura);
         tempCanal ->save(temperatura);
         Serial.print("sending -> ");
+        //Se manda el angulo del servo al feed
         Serial.println(angulo);
         relojCanal ->save(angulo);
         delay(3000);
