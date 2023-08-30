@@ -45,9 +45,11 @@ bool buttonState1 = HIGH;
 int ADCraw = 0;
 //Constantes para la temperatura
 float temperatura = 0.0;
+int angulo;
 //Funcion para convertir el analogico a digital
 // set up the 'counter' feed
 AdafruitIO_Feed *tempCanal = io.feed("Proyecto-sensor de temperatura");
+AdafruitIO_Feed *relojCanal = io.feed("reloj temperatura");
 uint32_t readADC_Cal(int ADC_RAW){
   esp_adc_cal_characteristics_t adc_chars;
   esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
@@ -95,6 +97,28 @@ void setup() {
 //Loop principal
 //*********************************
 void loop() {
+  if (10.0 <= temperatura && temperatura <23.0){
+    ledcWrite(0, 10);
+    angulo = 10;
+  } else if (23.0 <= temperatura && temperatura <23.5){
+    ledcWrite(0, 40);
+    angulo = 40;
+  } else if (23.5 <= temperatura && temperatura <24.5){
+    ledcWrite(0, 70);
+    angulo = 70;
+  } else if (24.5 <= temperatura && temperatura <25.0){
+    ledcWrite(0, 90);
+    angulo = 90;
+  } else if (25.0 <= temperatura && temperatura <26.0){
+    ledcWrite(0, 120);
+    angulo = 120;
+  } else if (26.0 <= temperatura && temperatura <26.5){
+    ledcWrite(0, 150);
+    angulo = 150;
+  } else if (26.5 <= temperatura) {
+    ledcWrite(0, 180);
+    angulo = 180;
+  }
   int reading1 = digitalRead(botemp);
   //Debounce para el boton
   if ((millis() - lastDebounceTime1) > debounceDelay) {
@@ -115,7 +139,9 @@ void loop() {
         Serial.print("sending -> ");
         Serial.println(temperatura);
         tempCanal ->save(temperatura);
-
+        Serial.print("sending -> ");
+        Serial.println(angulo);
+        relojCanal ->save(angulo);
         delay(3000);
       }
     }
@@ -147,11 +173,11 @@ void loop() {
   desplegarPunto(1);
   delay(5);
   //Encender los leds de acuerdo a la temperatura
-  if (temperatura < 37.0){
+  if (temperatura < 24.5){
     digitalWrite(rojo, LOW);
     digitalWrite(amarillo, LOW);
     digitalWrite(verde, HIGH);
-  } else if(temperatura >= 37.0 && temperatura <=37.5){
+  } else if(temperatura >= 24.5 && temperatura <=25.5){
     digitalWrite(rojo, LOW);
     digitalWrite(amarillo, HIGH);
     digitalWrite(verde, LOW);
@@ -159,35 +185,5 @@ void loop() {
     digitalWrite(rojo, HIGH);
     digitalWrite(amarillo, LOW);
     digitalWrite(verde, LOW);
-  }
-  //Mover el servo dependiendo de la temperatura
-  if (temperatura <23.0){
-    ledcWrite(0, 0);
-  } else if (23.0 <= temperatura && temperatura <23.5){
-    ledcWrite(0, 10);
-  } else if (23.5 <= temperatura && temperatura <24.5){
-    ledcWrite(0, 20);
-  } else if (24.5 <= temperatura && temperatura <25.5){
-    ledcWrite(0, 30);
-  } else if (25.5 <= temperatura && temperatura <26.5){
-    ledcWrite(0, 40);
-  } else if (26.5 <= temperatura && temperatura <29.5){
-    ledcWrite(0, 50);
-  } else if (29.5 <= temperatura && temperatura <32.5){
-    ledcWrite(0, 60);
-  } else if (32.5 <= temperatura && temperatura <35.5){
-    ledcWrite(0, 70);
-  } else if (35.5 <= temperatura && temperatura <36.5){
-    ledcWrite(0, 80);
-  } else if (37.0 <= temperatura && temperatura <37.5){
-    ledcWrite(0, 90);
-  } else if (37.5 <= temperatura && temperatura <39.5){
-    ledcWrite(0, 100);
-  } else if (39.5 <= temperatura && temperatura <40.5){
-    ledcWrite(0, 120);
-  } else if (40.5 <= temperatura && temperatura <41.5){
-    ledcWrite(0, 150);
-  } else {
-    ledcWrite(0, 180);
   }
 }
